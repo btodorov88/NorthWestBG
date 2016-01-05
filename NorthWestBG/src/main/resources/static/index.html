@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place Autocomplete</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+    </style>
+  </head>
+  <body>
+    <input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location">
+    <div id="map"></div>
+
+    <script>
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 43.2698509, lng: 23.7821252},
+    zoom: 9
+  });
+  var input = /** @type {!HTMLInputElement} */(
+      document.getElementById('pac-input'));
+
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  var infowindow = new google.maps.InfoWindow();
+
+  autocomplete.addListener('place_changed', function() {
+    infowindow.close();
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);  // Why 17? Because it looks good.
+    }
+  });
+
+  function addMarker(place){
+    var marker = new google.maps.Marker({
+      map: map,
+      position: new google.maps.LatLng(place.lat, place.lng)
+    });
+
+    marker.addListener('click', showInfo(marker, place));
+  }
+
+  function showInfo(marker, place){
+    return function(){
+      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.details);
+      infowindow.open(map, marker);
+    }
+  }
+
+  var places = [
+    {lat: 43.0692, lng: 23.5621, name: "Place 1", details: "Details 1"},
+    {lat: 43.1796, lng: 23.6723, name: "Place 2", details: "Details 2"},
+    {lat: 43.2899, lng: 23.7826, name: "Place 3", details: "Details 3"}
+  ];
+
+  places.forEach(function(place) {
+      addMarker(place);
+  });
+}
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxFUUZy1fZiK_66M-cfafrNvyAw_JK5po&signed_in=true&libraries=places&callback=initMap"
+        async defer></script>
+  </body>
+</html>
