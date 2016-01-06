@@ -4,6 +4,7 @@
     <title>Place Autocomplete</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/addPlace.css">
     <style>
       html, body {
         height: 100%;
@@ -43,12 +44,48 @@
   font-family: Roboto;
 }
 
+div#form {
+    width: 25%;
+    float: left;
+}
+div#map {
+    margin-left: 27%;
+    height: 600px;
+}
+
     </style>
   </head>
   <body>
+    <section>
+      <div id="form" class="basic-grey">
+        <h1>Register new Place
+            <span>Please fill all the fields.</span>
+        </h1>
+        <label>
+            <span>Place Name :</span>
+            <input id="name" type="text" name="name" placeholder="Full Name" />
+        </label>
+        
+        <label>
+            <span>Your Email :</span>
+            <input id="email" type="email" name="email" placeholder="Valid Email Address" />
+        </label>
+        
+        <label>
+            <span>Details :</span>
+            <textarea id="details" name="details" placeholder="Details about the place"></textarea>
+        </label> 
+         <label>
+            <span>&nbsp;</span> 
+            <input type="button" class="button" value="Send" /> 
+        </label>    
+      </div>
+
+      <div id="map"></div>
+    </section>
+
     <input id="pac-input" class="controls" type="text"
         placeholder="Enter a location">
-    <div id="map"></div>
 
     <script>
 function initMap() {
