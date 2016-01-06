@@ -4,7 +4,9 @@ import bg.btodorov.model.Place;
 import bg.btodorov.repo.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -23,11 +25,10 @@ public class PlaceController {
         return repository.findAll();
     }
 
-    @RequestMapping("/api/addPlace")
+    @RequestMapping(value = "/api/addPlace", method = RequestMethod.POST)
     @ResponseBody
-    public String addPlace(){
-        repository.insert(new Place("Test1", "Details1", "123","456"));
-        return "Success!";
+    public Place addPlace(@RequestBody Place place){
+        return repository.insert(place);
     }
 
 

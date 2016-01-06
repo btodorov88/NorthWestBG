@@ -4,6 +4,7 @@
     <title>Place Autocomplete</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/addPlace.css">
     <style>
       html, body {
@@ -77,7 +78,7 @@ div#map {
         </label> 
          <label>
             <span>&nbsp;</span> 
-            <input type="button" class="button" value="Send" /> 
+            <input id="savePlace" type="button" class="button" value="Send" /> 
         </label>    
       </div>
 
@@ -88,9 +89,9 @@ div#map {
         placeholder="Enter a location">
 
     <script>
-function initMap() {
-  var selectedMarker;
+var selectedMarker;
 
+function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 43.2698509, lng: 23.7821252},
     zoom: 9
@@ -135,7 +136,27 @@ function initMap() {
     }
   }
 }
-
+$(document).ready(function(){
+    $("#savePlace").click(function(){
+        $.ajax({
+          url: 'api/addPlace',
+          type: 'post',
+          data: JSON.stringify({
+            name: $('#name').val(),
+            details: $('#details').val(),
+            lat: selectedMarker.getPosition().lat(),
+            lng: selectedMarker.getPosition().lat()
+          }),
+          contentType:"application/json; charset=utf-8",
+          success: function (data) {
+              console.info(data);
+          },
+          error: function (data) {
+            alert("Error!");
+          }
+        });
+    });
+});
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxFUUZy1fZiK_66M-cfafrNvyAw_JK5po&signed_in=true&libraries=places&callback=initMap"
         async defer></script>

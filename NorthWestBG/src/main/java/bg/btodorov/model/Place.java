@@ -13,6 +13,8 @@ public class Place {
     private String lat;
     private String lng;
 
+    public Place(){}
+    
     public Place(String name, String details, String lat, String lng) {
         this.name = name;
         this.details = details;
@@ -39,5 +41,4 @@ public class Place {
     public String getLng() {
         return lng;
     }
-
 }
