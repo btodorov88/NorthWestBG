@@ -145,7 +145,7 @@ $(document).ready(function(){
             name: $('#name').val(),
             details: $('#details').val(),
             lat: selectedMarker.getPosition().lat(),
-            lng: selectedMarker.getPosition().lat()
+            lng: selectedMarker.getPosition().lng()
           }),
           contentType:"application/json; charset=utf-8",
           success: function (data) {
