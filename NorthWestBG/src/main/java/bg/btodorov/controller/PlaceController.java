@@ -31,7 +31,7 @@ public class PlaceController {
     @RequestMapping(value = "/api/addPlace", method = RequestMethod.POST)
     @ResponseBody
     public Place addPlace(@RequestBody Place place){
-        return repository.insert(place);
+        return repository.save(place);
     }
 
 
