@@ -102,7 +102,10 @@ function initMap() {
 
   function showInfo(marker, place){
     return function(){
-      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.details);
+      infowindow.setContent('<div><strong>' + place.name + 
+        '</strong><br>' + place.details +
+        '<br><a href="addPlace.html?id=' + place.id + '">Edit</a>'
+      );
       infowindow.open(map, marker);
     }
   }
